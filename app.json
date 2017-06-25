@@ -1,0 +1,6 @@
+{
+  "name": "Ghost Game in Spring Boot Heroku",
+  "description": "This is a small demo application for an enterview implementing de Ghost Game",
+  "repository": "https://github.com/fjroa/ghostGame",
+  "image": "heroku/java"
+}
