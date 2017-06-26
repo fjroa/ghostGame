@@ -8,11 +8,10 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import com.fjroa.ghost.game.TrieDictionary;
 import com.fjroa.ghost.game.Dictionary;
+import com.fjroa.ghost.game.TrieDictionary;
 
 @SpringBootApplication
 public class GhostApplication {

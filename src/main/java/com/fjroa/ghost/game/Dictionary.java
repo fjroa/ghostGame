@@ -1,11 +1,31 @@
 package com.fjroa.ghost.game;
 
-/**
- * Created by apicard on 9/16/15.
- */
 public interface Dictionary {
+    
+    /** The Constant MIN_WORD_LENGTH. */
     public final static int MIN_WORD_LENGTH = 4;
+    
+    /**
+     * Checks if is word.
+     *
+     * @param word the word
+     * @return true, if is word
+     */
     boolean isWord(String word);
-    String getAnyWordStartingWith(String prefix);
+    
+    /**
+     * Gets a word starting with.
+     *
+     * @param prefix the prefix
+     * @return the any word starting with
+     */
+    String getWordStartingWith(String prefix);
+    
+    /**
+     * Gets the next prefix.
+     *
+     * @param prefix the prefix
+     * @return the next prefix
+     */
     String getNextPrefix(String prefix);
 }

@@ -4,12 +4,27 @@ import java.util.HashMap;
 import java.util.Random;
 
 
+/**
+ * The Class TrieNode.
+ */
 public class TrieNode {
+    
+    /** The children. */
     private HashMap<Character, TrieNode> children = new HashMap<Character, TrieNode>();
+    
+    /** The is word. */
     private boolean isWord = false;
 
+    /**
+     * Instantiates a new trie node.
+     */
     public TrieNode() {}
 
+    /**
+     * Adds the word into the TrieNode
+     *
+     * @param word the word
+     */
     public void add(String word) {
         HashMap<Character,TrieNode> child = children;
         for(int i=0; i<word.length(); i++){
@@ -31,9 +46,14 @@ public class TrieNode {
         }
     }
 
-    // Returns if the word is in the trie.
-    public boolean isWord(String word) {
-        TrieNode t = searchNode(word);
+    /**
+     * Checks if is word.
+     *
+     * @param prefix the word
+     * @return true, if is the word is in the trie
+     */
+    public boolean isWord(String prefix) {
+        TrieNode t = searchNode(prefix);
         if(t != null && t.isWord)
             return true;
         else
@@ -41,11 +61,17 @@ public class TrieNode {
     }
 
 
-    protected TrieNode searchNode(String s){
+    /**
+     * Search node.
+     *
+     * @param prefix the prefix
+     * @return the trie node acording to the string
+     */
+    protected TrieNode searchNode(String prefix){
         HashMap<Character, TrieNode> child = children;
         TrieNode t = null;
-        for(int i=0; i<s.length(); i++){
-            char c = s.charAt(i);
+        for(int i=0; i<prefix.length(); i++){
+            char c = prefix.charAt(i);
             if(child.containsKey(c)){
                 t = child.get(c);
                 child = t.children;
@@ -57,9 +83,15 @@ public class TrieNode {
         return t;
     }
 
-    public String getAnyWordStartingWith(String s) {
-        TrieNode t = searchNode(s);
-        String output = s +"";
+    /**
+     * Gets a word starting with the prefix.
+     *
+     * @param prefix the prefix
+     * @return the any word starting with
+     */
+    public String getWordStartingWith(String prefix) {
+        TrieNode t = searchNode(prefix);
+        String output = new String(prefix);
         HashMap<Character,TrieNode> child;
         if(t==null){
             return null;
@@ -75,16 +107,21 @@ public class TrieNode {
         return output;
     }
 
+    /**
+     * Gets the random child.
+     *
+     * @param prefix the prefix
+     * @return the random child
+     */
     public String getRandomChild(String prefix) {
     	TrieNode t = searchNode(prefix);
         if (t != null && t.children != null && t.children.size() > 0) {
         	int i = 0;
         	int random = new Random().nextInt(t.children.size());
         	for (Character c : t.children.keySet()) {
-        		if (i == random) {
+        		if (random == i++) {
         			return prefix + c;
         		}
-        		i++;
         	}
         }
         return null;

@@ -13,12 +13,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fjroa.ghost.game.Dictionary;
 
+/**
+ * The Class GhostController.
+ */
 @RestController
 public class GhostController {
 
+	/** The dict. */
 	@Autowired
 	Dictionary dict;
 
+	/**
+	 * Gets the next move via ajax.
+	 *
+	 * @param prefix the prefix
+	 * @param errors the errors
+	 * @return the next move via ajax
+	 */
 	@PostMapping("/api/ghost")
 	public ResponseEntity<?> getNextMoveViaAjax(@Valid @RequestBody String prefix, Errors errors) {
 
@@ -46,7 +57,7 @@ public class GhostController {
 					result.setResult(prefix);
 					result.setActive(false);
 				} else {
-					result.setMsg("The game has started...");
+					result.setMsg("The game is active...");
 					result.setResult(nextPrefix);
 					result.setActive(true);
 				}
@@ -56,6 +67,13 @@ public class GhostController {
 
 	}
 	
+	/**
+	 * Gets the valid word for finish the game.
+	 *
+	 * @param prefix the prefix
+	 * @param errors the errors
+	 * @return the valid word
+	 */
 	@PostMapping("/api/challenge")
 	public ResponseEntity<?> getValidWord(@Valid @RequestBody String prefix, Errors errors) {
 
@@ -67,10 +85,17 @@ public class GhostController {
 			return ResponseEntity.badRequest().body(result);
 		}
 
-		String validWord = dict.getAnyWordStartingWith(prefix);
-		result.setMsg("You lose. " + validWord + " is a valid word.");
-		result.setResult(validWord);
-		result.setActive(false);
+		String validWord = dict.getWordStartingWith(prefix);
+		if (validWord != null && !validWord.isEmpty()) {
+			result.setMsg("You lose. " + validWord + " is a valid word.");
+			result.setResult(validWord);
+			result.setActive(false);
+		} else {
+			result.setMsg("You win. I can't find a valid word with this prefix.");
+			result.setResult(prefix);
+			result.setActive(false);
+		}
+		
 		return ResponseEntity.ok(result);
 	}
 }
