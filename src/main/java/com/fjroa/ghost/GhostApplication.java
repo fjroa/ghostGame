@@ -20,7 +20,12 @@ public class GhostApplication {
 	}
 	
 	@Bean
-	public Dictionary dict(@Value("${app.dictFile}") String dictFile) throws FileNotFoundException, IOException {
+	public Dictionary englishDict(@Value("${app.dictFile}") String dictFile) throws FileNotFoundException, IOException {
 		return new TrieDictionary(getClass().getClassLoader().getResourceAsStream(dictFile));
+	}
+	
+	@Bean
+	public Dictionary spanishDict(@Value("${app.spanishDictFile}") String spanishDictFile) throws FileNotFoundException, IOException {
+		return new TrieDictionary(getClass().getClassLoader().getResourceAsStream(spanishDictFile));
 	}
 }

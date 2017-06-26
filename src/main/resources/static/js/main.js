@@ -4,17 +4,16 @@ $(document).ready(function() {
 		fire_ajax_submit($("#word").text() + event.target.id);
 	});
 	$("#startGame").click(function() {
-		$('#word').html("");
-		$(".btn-game").prop("disabled", false);
-		$('#panel-title').html("Choose a letter...");
-		$(this).hide();
+		fire_ajax_start('en');
+	});
+	$("#startSpanishGame").click(function() {
+		fire_ajax_start('es');
 	});
 	$("#endGame").click(function() {
 		fire_ajax_endgame($("#word").text());
 	});
 	$(".btn-game").prop("disabled", true);
 	$("#endGame").hide();
-	$('#myModal').modal(options)
 });
 
 function fire_ajax_submit(prefix) {
@@ -42,6 +41,7 @@ function fire_ajax_submit(prefix) {
 				$("#endGame").show();
 			} else {
 				$("#startGame").show();
+				$("#startSpanishGame").show();
 				$("#endGame").hide();
 			}
 		},
@@ -77,6 +77,7 @@ function fire_ajax_endgame(prefix) {
 			$('#panel-title').html(data.msg);
 
 			$("#startGame").show();
+			$("#startSpanishGame").show();
 			$("#endGame").hide();
 
 		},
@@ -91,4 +92,33 @@ function fire_ajax_endgame(prefix) {
 		}
 	});
 
+}
+
+function fire_ajax_start(lang) {
+
+	$.ajax({
+		type : "POST",
+		contentType : "application/json",
+		url : "/api/start",
+		data : JSON.stringify(lang),
+		dataType : 'json',
+		cache : false,
+		timeout : 600000,
+		success : function(data) {
+			$('#word').html("");
+			$(".btn-game").prop("disabled", false);
+			$('#panel-title').html("Choose a letter...");
+			$("#startSpanishGame").hide();
+			$("#startGame").hide();
+		},
+		error : function(e) {
+
+			var json = "<h4>Ajax Response</h4><pre>" + e.responseText
+					+ "</pre>";
+			$('#feedback').html(json);
+
+			console.log("ERROR : ", e);
+
+		}
+	});
 }

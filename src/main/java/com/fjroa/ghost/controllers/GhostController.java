@@ -2,6 +2,7 @@ package com.fjroa.ghost.controllers;
 
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,14 @@ public class GhostController {
 
 	/** The dict. */
 	@Autowired
-	Dictionary dict;
+	Dictionary englishDict;
 
+	@Autowired
+	Dictionary spanishDict;
+
+	private Dictionary dict;
+	
+	
 	/**
 	 * Gets the next move via ajax.
 	 *
@@ -97,5 +104,37 @@ public class GhostController {
 		}
 		
 		return ResponseEntity.ok(result);
+	}
+	
+	/**
+	 * Starts a new game
+	 *
+	 * @param lang the language of the dictionary
+	 * @param errors the errors
+	 * @return the status
+	 */
+	@PostMapping("/api/start")
+	public ResponseEntity<?> startGame(@Valid @RequestBody String lang, Errors errors) {
+
+		AjaxResponseBody result = new AjaxResponseBody();
+		lang = lang.replace("\"", "");
+		if (errors.hasErrors()) {
+			result.setMsg(
+					errors.getAllErrors().stream().map(x -> x.getDefaultMessage()).collect(Collectors.joining(",")));
+			return ResponseEntity.badRequest().body(result);
+		}
+
+		if (lang.equals("es")) {
+			dict = spanishDict;
+		} else {
+			dict = englishDict;
+		}
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@PostConstruct
+	public void cargarDictDefecto() {
+		dict = englishDict;
 	}
 }

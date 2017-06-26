@@ -7,6 +7,8 @@
 
 <link rel="stylesheet" type="text/css"
 	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="webjars/flag-icon-css/2.8.0/css/flag-icon.min.css" />
 </head>
 
 <body>
@@ -43,10 +45,15 @@
 							complete a valid word.</p>
 						<p>Each fragment must be the beginning of an actual word, the
 							minimum length of a valid word is four letters.</p>
-							<hr />
-							<p>Press the start button and enter a letter to start the game.</p>
-							<p>If you don't know how to form a valid word with the given prefix, click the challenge button to end the game.</p>
-							<p><i>Hint: There are diminutive words like "lngth" in the dictionary.</i></p>
+						<hr />
+						<p>Press the start button and enter a letter to start the
+							game.</p>
+						<p>If you don't know how to form a valid word with the given
+							prefix, click the challenge button to end the game.</p>
+						<p>
+							<i>Hint: There are diminutive words like "lngth" in the
+								dictionary.</i>
+						</p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -64,8 +71,17 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row">
-						<button class="btn btn-success col-md-2" type="button"
-							id="startGame">Start</button>
+						<div class="btn-group-vertical col-md-2" role="group" aria-label="...">
+							<button class="btn btn-success col-md-1" type="button"
+								id="startGame">
+								<span class="flag-icon flag-icon-gb"></span> Start
+							</button>
+							<span class="col-md-1"></span>
+							<button class="btn btn-success col-md-1" type="button"
+								id="startSpanishGame">
+								<span class="flag-icon flag-icon-es"></span> Inicio
+							</button>
+						</div>
 						<span class="col-md-1"></span>
 						<h3 class="panel-title vcenter" id="panel-title">Click to
 							start a new game.</h3>
