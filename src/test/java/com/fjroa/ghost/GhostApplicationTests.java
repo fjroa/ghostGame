@@ -76,23 +76,40 @@ public class GhostApplicationTests {
 	}
 	
 	/**
+	 * Test next prefix when the next is word but exist another path.
+	 * En el contexto de test tendremos el siguiente diccionario: winner, loser, wind
+	 * Al envio de win espera que devuelva winn en lugar de wind
+	 * @throws Exception the exception
+	 */
+	@Test
+	public void testNextPrefix2() throws Exception {
+		final MvcResult result = mvc
+				.perform(MockMvcRequestBuilders.post("/api/ghost").accept(MediaType.APPLICATION_JSON).content("\"win\""))
+				.andExpect(status().isOk()).andReturn();
+		AjaxResponseBody response = jsonMapper.readValue(result.getResponse().getContentAsString(),
+				AjaxResponseBody.class);
+		Assert.assertEquals(response.getResult(), "winn");
+		Assert.assertEquals(response.getActive(), true);
+	}
+	
+	/**
 	 * Test dict.
-	 * En el contexto de test tendremos el siguiente diccionario: winner, loser
-	 * Al envio de w espera que devuelva winner
+	 * En el contexto de test tendremos el siguiente diccionario:  winner, loser, wind
+	 * Al envio de w espera que devuelva wind
 	 * Al envio de l espera que devuelva loser
 	 * Al envio de g espera que devuelva null
 	 * @throws Exception the exception
 	 */
 	@Test
 	public void testDict() throws Exception {
-		Assert.assertEquals(dict.getWordStartingWith("w"), "winner");
+		Assert.assertEquals(dict.getWordStartingWith("w"), "wind");
 		Assert.assertEquals(dict.getWordStartingWith("l"), "loser");
 		Assert.assertEquals(dict.getWordStartingWith("g"), null);
 	}
 	
 	/**
 	 * Test invalid prefix.
-	 * En el contexto de test tendremos el siguiente diccionario: winner, loser
+	 * En el contexto de test tendremos el siguiente diccionario:  winner, loser, wind
 	 * Al envio de wm espera que devuelva fin de la partida
 	 * @throws Exception the exception
 	 */
@@ -110,7 +127,7 @@ public class GhostApplicationTests {
 	/**
 	 * Test word valid.
 	 * Test invalid prefix.
-	 * En el contexto de test tendremos el siguiente diccionario: winner, loser
+	 * En el contexto de test tendremos el siguiente diccionario: winner, loser, wind
 	 * Al envio de loser espera que devuelva fin de la partida
 	 * @throws Exception the exception
 	 */
@@ -127,7 +144,7 @@ public class GhostApplicationTests {
 	
 	/**
 	 * Test player wins.
-	 * En el contexto de test tendremos el siguiente diccionario: winner, loser
+	 * En el contexto de test tendremos el siguiente diccionario:  winner, loser, wind
 	 * Al envio de winne espera que devuelva fin de la partida
 	 * @throws Exception the exception
 	 */
@@ -144,7 +161,7 @@ public class GhostApplicationTests {
 	
 	/**
 	 * Test challenge.
-	 * En el contexto de test tendremos el siguiente diccionario: winner, loser
+	 * En el contexto de test tendremos el siguiente diccionario:  winner, loser, wind
 	 * Al envio de lo espera que devuelva loser y fin de la partida
 	 * @throws Exception the exception
 	 */

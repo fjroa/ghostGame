@@ -1,2 +1,3 @@
 loser
+wind
 winner
