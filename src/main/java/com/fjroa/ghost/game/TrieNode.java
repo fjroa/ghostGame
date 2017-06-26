@@ -122,7 +122,7 @@ public class TrieNode {
 		if (t != null && t.children != null && t.children.size() > 0) {
 			int i = 0;
 			int random = new Random().nextInt(t.children.size());
-			int maxRandomIterations = t.children.size() * 2;
+			int maxRandomIterations = t.children.size() * 5;
 			int counter = 0;
 			while (counter++ < maxRandomIterations) {
 				for (Character c : t.children.keySet()) {
@@ -130,6 +130,8 @@ public class TrieNode {
 						newPrefix = prefix + c;
 						if (isWord(newPrefix)) {
 							random = new Random().nextInt(t.children.size());
+							i = 0;
+							break;
 						} else {
 							return newPrefix;
 						}
