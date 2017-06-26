@@ -1,7 +1,5 @@
 package com.fjroa.ghost;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -22,7 +20,7 @@ public class GhostApplication {
 	}
 	
 	@Bean
-	public Dictionary dict(@Value("${app.dictFile}") File dictFile) throws FileNotFoundException, IOException {
-		return new TrieDictionary(new FileInputStream(dictFile));
+	public Dictionary dict(@Value("${app.dictFile}") String dictFile) throws FileNotFoundException, IOException {
+		return new TrieDictionary(getClass().getClassLoader().getResourceAsStream(dictFile));
 	}
 }
