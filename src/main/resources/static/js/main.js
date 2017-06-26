@@ -14,6 +14,7 @@ $(document).ready(function() {
 	});
 	$(".btn-game").prop("disabled", true);
 	$("#endGame").hide();
+	$('#myModal').modal(options)
 });
 
 function fire_ajax_submit(prefix) {
