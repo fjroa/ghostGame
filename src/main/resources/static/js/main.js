@@ -1,18 +1,15 @@
 $(document).ready(function() {
 
-	$(".btn-game").click(function() {
-		event.preventDefault();
+	$(".btn-game").click(function(event) {
 		fire_ajax_submit($("#word").text() + event.target.id);
 	});
 	$("#startGame").click(function() {
-		event.preventDefault();
 		$('#word').html("");
 		$(".btn-game").prop("disabled", false);
 		$('#panel-title').html("Choose a letter...");
 		$(this).hide();
 	});
 	$("#endGame").click(function() {
-		event.preventDefault();
 		fire_ajax_endgame($("#word").text());
 	});
 	$(".btn-game").prop("disabled", true);
