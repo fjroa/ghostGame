@@ -34,7 +34,7 @@ public class TrieDictionary implements Dictionary {
 
 	private String cleanWord(String s) {
 		return s.replaceAll("á", "a").replaceAll("é", "e").replaceAll("í", "i").replaceAll("ó", "o")
-				.replaceAll("ú", "o").replaceAll("'", "");
+				.replaceAll("ú", "o").replaceAll("'", "").toLowerCase();
 	}
 
 	/*
