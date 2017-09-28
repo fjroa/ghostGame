@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Ghost Game</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="css/jquery.ml-keyboard.css" />
+<link rel="stylesheet" type="text/css"
+	href="webjars/flag-icon-css/2.8.0/css/flag-icon.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="webjars/animate.css/3.2.0/animate.min.css" />	
+</head>
+<style>
+	.vertical-center {
+	  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+	  min-height: 40vh; /* These two lines are counted as one :-)       */
+	
+	  display: flex;
+	  align-items: center;
+	}
+</style>
+<body>
+
+	<nav class="navbar navbar-inverse  vertical-center">
+		<div class="container">
+			<div class="navbar-header wow bounceInLeft col-md-4" data-wow-delay=".3s" >
+				<img src="images/logo.png" alt="Ghost Game" />
+			</div>
+				<div class="btn-group-vertical col-md-6 pull-right" role="group" aria-label="...">
+					<div class="row pull-right col-md-10">					
+							<a class="btn btn-success col-md-4" href="/?lang=en">
+								<span class="flag-icon flag-icon-gb"></span><span style="margin-left: 1vh" th:text="#{lang.en}"></span>
+							</a>
+							<span class="col-md-1"></span>
+							<a class="btn btn-success col-md-4" href="/?lang=es">
+								<span class="flag-icon flag-icon-es"></span><span style="margin-left: 1vh" th:text="#{lang.es}"></span> 
+							</a>
+					</div>
+					
+					<button type="button" class="btn btn-info btn-lg pull-right" style="margin-top: 8vh"
+						data-toggle="modal" data-target="#myModal">
+						<span class="glyphicon glyphicon-info-sign"><span th:text="#{instructions}" style="margin-left: 1vh"></span></span>
+					</button>
+				</div>
+
+		</div>
+	</nav>
+
+	<div class="container" style="min-height: 500px">
+
+		<div class="starter-template">
+			
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="btn-group-vertical col-md-2" role="group" aria-label="...">
+							<button class="btn btn-success col-md-1" type="button"
+								id="startGame">
+								<span class="flag-icon flag-icon-gb"></span> Start
+							</button>
+							<span class="col-md-1"></span>
+							<button class="btn btn-success col-md-1" type="button"
+								id="startSpanishGame">
+								<span class="flag-icon flag-icon-es"></span> Inicio
+							</button>
+						</div>
+						<span class="col-md-1"></span>
+						<h3 class="panel-title vcenter" id="panel-title">.</h3>
+					</div>
+				</div>
+				<div class="panel-body row">
+					<input type="text" id="word" class="col-md-12" th:placeholder="#{select.language}"/>
+					<button class="btn btn-warning col-md-2" type="button" id="endGame">Challenge!</button>
+					<span class="col-md-1"></span>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+	<div>
+		<code id="feedback">
+		</code>
+	</div>
+	<div class="container">
+		<footer>
+			<p>© Francisco Javier Roa López 2017</p>
+		</footer>
+	</div>
+
+	<!-- Modal -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Game Instructions</h4>
+					</div>
+					<div class="modal-body">
+						<p>Ghost is a word game in which players take turns adding
+							letters to a growing word fragment, trying not to be the one to
+							complete a valid word.</p>
+						<p>Each fragment must be the beginning of an actual word, the
+							minimum length of a valid word is four letters.</p>
+						<hr />
+						<p>Press the start button and enter a letter to start the
+							game.</p>
+						<p>If you don't know how to form a valid word with the given
+							prefix, click the challenge button to end the game.</p>
+						<p>
+							<i>Hint: There are diminutive words like "lngth" in the
+								dictionary.</i>
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		
+	<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
+	<script src="webjars/bootstrap/3.3.7/js/modal.js"></script>
+	<script type="text/javascript" src="js/jquery.ml-keyboard.min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="webjars/WOW/1.1.2/wow.min.js"></script>
+    
+</body>
+</html>

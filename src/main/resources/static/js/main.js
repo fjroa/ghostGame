@@ -1,5 +1,11 @@
 $(document).ready(function() {
 
+  	$('input#word').mlKeyboard({layout: 'en_US', is_hidden: 'false'});
+  	
+  	$('input#word').on('input',function(e){
+ 		alert('Changed!')
+	});
+  	
 	$(".btn-game").click(function(event) {
 		fire_ajax_submit($("#word").text() + event.target.id);
 	});

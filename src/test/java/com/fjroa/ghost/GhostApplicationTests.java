@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fjroa.ghost.controllers.AjaxResponseBody;
-import com.fjroa.ghost.game.Dictionary;
+import com.fjroa.ghost.game.IDictionary;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -34,7 +34,7 @@ public class GhostApplicationTests {
 	/** The dict. */
 	@Autowired
 	@Qualifier("englishDict")
-	private Dictionary dict;
+	private IDictionary dict;
 	
 	/** The json mapper. */
 	private ObjectMapper jsonMapper = new ObjectMapper();

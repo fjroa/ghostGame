@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fjroa.ghost.game.Dictionary;
+import com.fjroa.ghost.game.IDictionary;
 
 /**
  * The Class GhostController.
@@ -22,12 +22,12 @@ public class GhostController {
 
 	/** The dict. */
 	@Autowired
-	Dictionary englishDict;
+	IDictionary englishDict;
 
 	@Autowired
-	Dictionary spanishDict;
+	IDictionary spanishDict;
 
-	private Dictionary dict;
+	private IDictionary dict;
 	
 	
 	/**
@@ -131,10 +131,5 @@ public class GhostController {
 		}
 		
 		return ResponseEntity.ok(result);
-	}
-	
-	@PostConstruct
-	public void cargarDictDefecto() {
-		dict = englishDict;
 	}
 }

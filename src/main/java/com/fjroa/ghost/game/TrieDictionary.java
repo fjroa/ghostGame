@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 /**
  * The Class TrieDictionary.
  */
-public class TrieDictionary implements Dictionary {
+public class TrieDictionary implements IDictionary {
 
 	/** The root. */
 	private TrieNode root;
