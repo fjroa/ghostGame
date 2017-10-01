@@ -11,9 +11,9 @@ public class AjaxResponseBody {
     /** The result. */
     String result;
     
-    /** The active. */
-    Boolean active;
-
+    /** The msg. */
+    String letter;
+    
     /**
      * Gets the msg.
      *
@@ -50,22 +50,14 @@ public class AjaxResponseBody {
         this.result = result;
     }
 
-	/**
-	 * Gets the active.
-	 *
-	 * @return the active
-	 */
-	public Boolean getActive() {
-		return active;
+	public String getLetter() {
+		return letter;
 	}
 
-	/**
-	 * Sets the active.
-	 *
-	 * @param active the new active
-	 */
-	public void setActive(Boolean active) {
-		this.active = active;
+	public void setLetter(String letter) {
+		this.letter = letter;
 	}
+
+
 
 }

@@ -1,11 +1,12 @@
 package com.fjroa.ghost.controllers;
 
+import java.util.Locale;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,9 +28,6 @@ public class GhostController {
 	@Autowired
 	IDictionary spanishDict;
 
-	private IDictionary dict;
-	
-	
 	/**
 	 * Gets the next move via ajax.
 	 *
@@ -47,26 +45,28 @@ public class GhostController {
 					errors.getAllErrors().stream().map(x -> x.getDefaultMessage()).collect(Collectors.joining(",")));
 			return ResponseEntity.badRequest().body(result);
 		}
-
+		
+		IDictionary dict = getDict();
+		
 		if (dict.isWord(prefix)) {
 			result.setMsg("You lose. " + prefix + " is a valid word.");
 			result.setResult(prefix);
-			result.setActive(false);
+			result.setLetter(null);
 		} else {
 			String nextPrefix = dict.getNextPrefix(prefix);
 			if (nextPrefix == null) {
 				result.setMsg("You lose. There is no valid word with this prefix.");
 				result.setResult(prefix);
-				result.setActive(false);
+				result.setLetter(null);
 			} else {
 				if (dict.isWord(nextPrefix)) {
 					result.setMsg("You win. I only can find a valid word : " + nextPrefix);
 					result.setResult(prefix);
-					result.setActive(false);
+					result.setLetter(null);
 				} else {
 					result.setMsg("The game is active...");
 					result.setResult(nextPrefix);
-					result.setActive(true);
+					result.setLetter(nextPrefix.substring(nextPrefix.length()-1));
 				}
 			}
 		}
@@ -91,16 +91,16 @@ public class GhostController {
 					errors.getAllErrors().stream().map(x -> x.getDefaultMessage()).collect(Collectors.joining(",")));
 			return ResponseEntity.badRequest().body(result);
 		}
-
+		IDictionary dict = getDict();
 		String validWord = dict.getWordStartingWith(prefix);
 		if (validWord != null && !validWord.isEmpty()) {
 			result.setMsg("You lose. " + validWord + " is a valid word.");
 			result.setResult(validWord);
-			result.setActive(false);
+			result.setLetter(null);
 		} else {
 			result.setMsg("You win. I can't find a valid word with this prefix.");
 			result.setResult(prefix);
-			result.setActive(false);
+			result.setLetter(null);
 		}
 		
 		return ResponseEntity.ok(result);
@@ -113,23 +113,12 @@ public class GhostController {
 	 * @param errors the errors
 	 * @return the status
 	 */
-	@PostMapping("/api/start")
-	public ResponseEntity<?> startGame(@Valid @RequestBody String lang, Errors errors) {
-
-		AjaxResponseBody result = new AjaxResponseBody();
-		lang = lang.replace("\"", "");
-		if (errors.hasErrors()) {
-			result.setMsg(
-					errors.getAllErrors().stream().map(x -> x.getDefaultMessage()).collect(Collectors.joining(",")));
-			return ResponseEntity.badRequest().body(result);
-		}
-
-		if (lang.equals("es")) {
-			dict = spanishDict;
+	public IDictionary getDict() {
+		Locale locale = LocaleContextHolder.getLocale();
+		if (locale.getLanguage().equals("es")) {
+			return spanishDict;
 		} else {
-			dict = englishDict;
+			return englishDict;
 		}
-		
-		return ResponseEntity.ok(result);
 	}
 }

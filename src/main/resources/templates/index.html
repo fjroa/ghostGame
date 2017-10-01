@@ -4,29 +4,29 @@
 <head>
 <title>Ghost Game</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <link rel="stylesheet" type="text/css"
 	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
-<link href="css/keyboard.css" rel="stylesheet" />
+<link href="css/keyboard-dark.min.css" rel="stylesheet" />
+<link href="webjars/jquery-ui/1.9.2/css/smoothness/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css"
-	href="webjars/flag-icon-css/2.8.0/css/flag-icon.min.css" />
-<link rel="stylesheet" type="text/css"
-	href="webjars/animate.css/3.2.0/animate.min.css" />	
+	href="webjars/flag-icon-css/2.8.0/css/flag-icon.min.css" />	
+	
 </head>
 <style>
 	.vertical-center {
 	  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-	  min-height: 40vh; /* These two lines are counted as one :-)       */
-	
+	  min-height: 30vh; /* These two lines are counted as one :-)       */
 	  display: flex;
 	  align-items: center;
 	}
 </style>
 <body>
 
-<!-- 	<nav class="navbar navbar-inverse  vertical-center">
+ 	<nav class="navbar navbar-inverse  vertical-center " style="background-color: #E0DED5;">
 		<div class="container">
-			<div class="navbar-header wow bounceInLeft col-md-4" data-wow-delay=".3s" >
+			<div class="navbar-header col-md-4" data-wow-delay=".3s" >
 				<img src="images/logo.png" alt="Ghost Game" />
 			</div>
 				<div class="btn-group-vertical col-md-6 pull-right" role="group" aria-label="...">
@@ -39,7 +39,6 @@
 								<span class="flag-icon flag-icon-es"></span><span style="margin-left: 1vh" th:text="#{lang.es}"></span> 
 							</a>
 					</div>
-					
 					<button type="button" class="btn btn-info btn-lg pull-right" style="margin-top: 8vh"
 						data-toggle="modal" data-target="#myModal">
 						<span class="glyphicon glyphicon-info-sign"><span th:text="#{instructions}" style="margin-left: 1vh"></span></span>
@@ -47,40 +46,23 @@
 				</div>
 
 		</div>
-	</nav> -->
+	</nav>
 
 	<div class="container" style="min-height: 500px">
 
-		<div class="starter-template">
-			
+		<div class="starter-template">			
 
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="btn-group-vertical col-md-2" role="group" aria-label="...">
-							<button class="btn btn-success col-md-1" type="button"
-								id="startGame">
-								<span class="flag-icon flag-icon-gb"></span> Start
-							</button>
-							<span class="col-md-1"></span>
-							<button class="btn btn-success col-md-1" type="button"
-								id="startSpanishGame">
-								<span class="flag-icon flag-icon-es"></span> Inicio
-							</button>
-						</div>
-						<span class="col-md-1"></span>
-						<h3 class="panel-title vcenter" id="panel-title">.</h3>
-					</div>
-				</div>
-				<div class="panel-body row">
-					<input type="text" id="word" class="col-md-12" th:placeholder="#{select.language}"/>
-					<button class="btn btn-warning col-md-2" type="button" id="endGame">Challenge!</button>
-					<span class="col-md-1"></span>
-				</div>
-
-			
+			<div class="panel panel-heading center-block">
+				<button class="btn btn-success col-md-2" type="button"
+					id="startGame">
+					<span th:text="#{start}"></span>
+				</button>							
 			</div>
-
+			<div class="block">
+				<input type="text" id="word" th:placeholder="#{select.language}"/>
+				<button class="btn btn-warning col-md-2" type="button" id="endGame">End Game</button>
+				<span class="col-md-1"></span>
+			</div>
 
 		</div>
 	</div>
@@ -126,9 +108,10 @@
 	<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
 	<script type="text/javascript" src="webjars/jquery-ui/1.9.2/js/jquery-ui-1.9.2.custom.min.js"></script>
 	<script src="webjars/bootstrap/3.3.7/js/modal.js"></script>
-	<script src="js/jquery.keyboard.js"></script>
+	<script src="js/jquery.keyboard.min.js"></script>
+		<script src="js/jquery.keyboard.extension-autocomplete.min.js"></script>
+	<script src="js/jquery.keyboard.extension-all.min.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
-    <script type="text/javascript" src="webjars/WOW/1.1.2/wow.min.js"></script>
     
 </body>
 </html>

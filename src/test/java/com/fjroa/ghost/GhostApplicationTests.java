@@ -74,7 +74,7 @@ public class GhostApplicationTests {
 		AjaxResponseBody response = jsonMapper.readValue(result.getResponse().getContentAsString(),
 				AjaxResponseBody.class);
 		Assert.assertEquals(response.getResult(), "wi");
-		Assert.assertEquals(response.getActive(), true);
+		Assert.assertEquals(response.getLetter(), "i");
 	}
 	
 	/**
@@ -91,7 +91,7 @@ public class GhostApplicationTests {
 		AjaxResponseBody response = jsonMapper.readValue(result.getResponse().getContentAsString(),
 				AjaxResponseBody.class);
 		Assert.assertEquals(response.getResult(), "winn");
-		Assert.assertEquals(response.getActive(), true);
+		Assert.assertEquals(response.getLetter(), "n");
 	}
 	
 	/**
@@ -123,7 +123,7 @@ public class GhostApplicationTests {
 		AjaxResponseBody response = jsonMapper.readValue(result.getResponse().getContentAsString(),
 				AjaxResponseBody.class);
 		Assert.assertEquals(response.getResult(), "wm");
-		Assert.assertEquals(response.getActive(), false);
+		Assert.assertEquals(response.getLetter(), null);
 	}
 	
 	/**
@@ -141,7 +141,7 @@ public class GhostApplicationTests {
 		AjaxResponseBody response = jsonMapper.readValue(result.getResponse().getContentAsString(),
 				AjaxResponseBody.class);
 		Assert.assertEquals(response.getResult(), "loser");
-		Assert.assertEquals(response.getActive(), false);
+		Assert.assertEquals(response.getLetter(), null);
 	}
 	
 	/**
@@ -157,8 +157,8 @@ public class GhostApplicationTests {
 				.andExpect(status().isOk()).andReturn();
 		AjaxResponseBody response = jsonMapper.readValue(result.getResponse().getContentAsString(),
 				AjaxResponseBody.class);
-		Assert.assertEquals(response.getResult(), "winne");
-		Assert.assertEquals(response.getActive(), false);
+		Assert.assertEquals(response.getResult(), "winner");
+		Assert.assertEquals(response.getLetter(), null);
 	}
 	
 	/**
@@ -175,6 +175,6 @@ public class GhostApplicationTests {
 		AjaxResponseBody response = jsonMapper.readValue(result.getResponse().getContentAsString(),
 				AjaxResponseBody.class);
 		Assert.assertEquals(response.getResult(), "loser");
-		Assert.assertEquals(response.getActive(), false);
+		Assert.assertEquals(response.getLetter(), null);
 	}
 }
