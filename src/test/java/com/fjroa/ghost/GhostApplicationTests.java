@@ -20,7 +20,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fjroa.ghost.controllers.AjaxResponseBody;
-import com.fjroa.ghost.game.IDictionary;
+import com.fjroa.ghost.controllers.GhostController;
+import com.fjroa.ghost.dict.IDictionary;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -73,8 +74,9 @@ public class GhostApplicationTests {
 				.andExpect(status().isOk()).andReturn();
 		AjaxResponseBody response = jsonMapper.readValue(result.getResponse().getContentAsString(),
 				AjaxResponseBody.class);
+		Assert.assertEquals(response.getMsg(), GhostController.PLAY);
 		Assert.assertEquals(response.getResult(), "wi");
-		Assert.assertEquals(response.getLetter(), "i");
+		Assert.assertEquals(response.getLetter(), new Character('i'));
 	}
 	
 	/**
@@ -90,8 +92,9 @@ public class GhostApplicationTests {
 				.andExpect(status().isOk()).andReturn();
 		AjaxResponseBody response = jsonMapper.readValue(result.getResponse().getContentAsString(),
 				AjaxResponseBody.class);
+		Assert.assertEquals(response.getMsg(), GhostController.PLAY);
 		Assert.assertEquals(response.getResult(), "winn");
-		Assert.assertEquals(response.getLetter(), "n");
+		Assert.assertEquals(response.getLetter(), new Character('n'));
 	}
 	
 	/**
@@ -104,9 +107,9 @@ public class GhostApplicationTests {
 	 */
 	@Test
 	public void testDict() throws Exception {
-		Assert.assertEquals(dict.getWordStartingWith("w"), "wind");
-		Assert.assertEquals(dict.getWordStartingWith("l"), "loser");
-		Assert.assertEquals(dict.getWordStartingWith("g"), null);
+		Assert.assertEquals(dict.getFirstWordStartingWith("w"), "wind");
+		Assert.assertEquals(dict.getFirstWordStartingWith("l"), "loser");
+		Assert.assertEquals(dict.getFirstWordStartingWith("g"), null);
 	}
 	
 	/**
@@ -122,6 +125,7 @@ public class GhostApplicationTests {
 				.andExpect(status().isOk()).andReturn();
 		AjaxResponseBody response = jsonMapper.readValue(result.getResponse().getContentAsString(),
 				AjaxResponseBody.class);
+		Assert.assertEquals(response.getMsg(), GhostController.LOSE);
 		Assert.assertEquals(response.getResult(), "wm");
 		Assert.assertEquals(response.getLetter(), null);
 	}
@@ -140,6 +144,7 @@ public class GhostApplicationTests {
 				.andExpect(status().isOk()).andReturn();
 		AjaxResponseBody response = jsonMapper.readValue(result.getResponse().getContentAsString(),
 				AjaxResponseBody.class);
+		Assert.assertEquals(response.getMsg(), GhostController.LOSE);
 		Assert.assertEquals(response.getResult(), "loser");
 		Assert.assertEquals(response.getLetter(), null);
 	}
@@ -157,6 +162,7 @@ public class GhostApplicationTests {
 				.andExpect(status().isOk()).andReturn();
 		AjaxResponseBody response = jsonMapper.readValue(result.getResponse().getContentAsString(),
 				AjaxResponseBody.class);
+		Assert.assertEquals(response.getMsg(), GhostController.WIN);
 		Assert.assertEquals(response.getResult(), "winner");
 		Assert.assertEquals(response.getLetter(), null);
 	}
@@ -168,12 +174,13 @@ public class GhostApplicationTests {
 	 * @throws Exception the exception
 	 */
 	@Test
-	public void testChallenge() throws Exception {
+	public void testGiveup() throws Exception {
 		final MvcResult result = mvc
-				.perform(MockMvcRequestBuilders.post("/api/challenge").accept(MediaType.APPLICATION_JSON).content("\"lo\""))
+				.perform(MockMvcRequestBuilders.post("/api/giveup").accept(MediaType.APPLICATION_JSON).content("\"lo\""))
 				.andExpect(status().isOk()).andReturn();
 		AjaxResponseBody response = jsonMapper.readValue(result.getResponse().getContentAsString(),
 				AjaxResponseBody.class);
+		Assert.assertEquals(response.getMsg(), GhostController.LOSE);
 		Assert.assertEquals(response.getResult(), "loser");
 		Assert.assertEquals(response.getLetter(), null);
 	}

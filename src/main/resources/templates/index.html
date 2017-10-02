@@ -8,68 +8,81 @@
 
 <link rel="stylesheet" type="text/css"
 	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
-<link href="css/keyboard-dark.min.css" rel="stylesheet" />
-<link href="webjars/jquery-ui/1.9.2/css/smoothness/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />
+<link href="css/keyboard.min.css" rel="stylesheet" />
+<link href="css/index.css" rel="stylesheet" />
+<link
+	href="webjars/jquery-ui/1.9.2/css/smoothness/jquery-ui-1.9.2.custom.min.css"
+	rel="stylesheet" />
 <link rel="stylesheet" type="text/css"
-	href="webjars/flag-icon-css/2.8.0/css/flag-icon.min.css" />	
-	
+	href="webjars/flag-icon-css/2.8.0/css/flag-icon.min.css" />
+
 </head>
 <style>
-	.vertical-center {
-	  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-	  min-height: 30vh; /* These two lines are counted as one :-)       */
-	  display: flex;
-	  align-items: center;
-	}
+.vertical-center {
+	min-height: 100%; /* Fallback for browsers do NOT support vh unit */
+	min-height: 30vh; /* These two lines are counted as one :-)       */
+	display: flex;
+	align-items: center;
+}
 </style>
 <body>
 
- 	<nav class="navbar navbar-inverse  vertical-center " style="background-color: #E0DED5;">
+	<nav class="navbar navbar-inverse  vertical-center "
+		style="background-color: #E0DED5;">
 		<div class="container">
-			<div class="navbar-header col-md-4" data-wow-delay=".3s" >
+			<div class="navbar-header col-md-4" data-wow-delay=".3s">
 				<img src="images/logo.png" alt="Ghost Game" />
 			</div>
-				<div class="btn-group-vertical col-md-6 pull-right" role="group" aria-label="...">
-					<div class="row pull-right col-md-10">					
-							<a class="btn btn-success col-md-4" href="/?lang=en">
-								<span class="flag-icon flag-icon-gb"></span><span style="margin-left: 1vh" th:text="#{lang.en}"></span>
-							</a>
-							<span class="col-md-1"></span>
-							<a class="btn btn-success col-md-4" href="/?lang=es">
-								<span class="flag-icon flag-icon-es"></span><span style="margin-left: 1vh" th:text="#{lang.es}"></span> 
-							</a>
-					</div>
-					<button type="button" class="btn btn-info btn-lg pull-right" style="margin-top: 8vh"
-						data-toggle="modal" data-target="#myModal">
-						<span class="glyphicon glyphicon-info-sign"><span th:text="#{instructions}" style="margin-left: 1vh"></span></span>
-					</button>
+			<div class="btn-group-vertical col-md-6 pull-right" role="group"
+				aria-label="...">
+				<div class="row pull-right col-md-10">
+					<a class="btn btn-success col-md-4" href="/?lang=en"> <span
+						class="flag-icon flag-icon-gb"></span><span
+						style="margin-left: 1vh" th:text="#{lang.en}"></span>
+					</a> <span class="col-md-1"></span> <a class="btn btn-success col-md-4"
+						href="/?lang=es"> <span class="flag-icon flag-icon-es"></span><span
+						style="margin-left: 1vh" th:text="#{lang.es}"></span>
+					</a>
 				</div>
+				<button type="button" class="btn btn-info btn-lg pull-right"
+					style="margin-top: 8vh" data-toggle="modal" data-target="#myModal">
+					<span class="glyphicon glyphicon-info-sign"><span
+						th:text="#{instructions}" style="margin-left: 1vh"></span></span>
+				</button>
+			</div>
 
 		</div>
 	</nav>
 
-	<div class="container" style="min-height: 500px">
-
-		<div class="starter-template">			
-
-			<div class="panel panel-heading center-block">
-				<button class="btn btn-success col-md-2" type="button"
-					id="startGame">
-					<span th:text="#{start}"></span>
-				</button>							
-			</div>
-			<div class="block">
-				<input type="text" id="word" th:placeholder="#{select.language}"/>
-				<button class="btn btn-warning col-md-2" type="button" id="endGame">End Game</button>
-				<span class="col-md-1"></span>
-			</div>
-
+	<div id="page-wrap">
+		<h2 class="center-block">
+			<span th:text="#{notif.new_game}" id="notification"
+				class="label label-default"></span>
+				 <span th:text="#{notif.play}"
+				id="notification2" class="label label-primary"
+				style="display:none"></span> <span th:text="#{notif.lose}"
+				id="notification3" class="label label-danger"
+				style="display:none"></span> <span th:text="#{notif.lose2}"
+				id="notification4" class="label label-danger"
+				style="display:none"></span> <span th:text="#{notif.giveup}"
+				id="notification5" class="label label-danger"
+				style="display:none"></span> <span th:text="#{notif.win}"
+				id="notification6" class="label label-success"
+				style="display:none"></span>
+				<b><span id="result-word"></span></b>
+				<button class="btn btn-warning col-md-3" type="button" id="endGame"
+				th:text="#{giveup}" style="display:none"></button>
+				<button class="btn btn-success col-md-3" type="button" id="newGame"
+				th:text="#{start}" style="display:none"></button>
+				
+		</h2>
+		<div class="block">
+			<input type="text" id="word" th:placeholder="#{start}" />
 		</div>
 	</div>
-	<div>
-		<code id="feedback">
-		</code>
-	</div>
+
+	<code id="feedback"> </code>
+	
 	<div class="container">
 		<footer>
 			<p>© Francisco Javier Roa López 2017</p>
@@ -77,41 +90,35 @@
 	</div>
 
 	<!-- Modal -->
-		<div class="modal fade" id="myModal" role="dialog">
-			<div class="modal-dialog">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Game Instructions</h4>
-					</div>
-					<div class="modal-body">
-						<p>Ghost is a word game in which players take turns adding
-							letters to a growing word fragment, trying not to be the one to
-							complete a valid word.</p>
-						<p>Each fragment must be the beginning of an actual word, the
-							minimum length of a valid word is four letters.</p>
-						<hr />
-						<p>Press the start button and enter a letter to start the
-							game.</p>
-						<p>If you don't know how to form a valid word with the given
-							prefix, click the challenge button to end the game.</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" th:text="#{instructions.title}"></h4>
 				</div>
-
+				<div class="modal-body">
+					<p th:text="#{instructions.1}"></p>
+					<p th:text="#{instructions.2}"></p>
+					<hr />
+					<p th:text="#{instructions.3}"></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
 			</div>
+
 		</div>
-		
+	</div>
+
 	<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
-	<script type="text/javascript" src="webjars/jquery-ui/1.9.2/js/jquery-ui-1.9.2.custom.min.js"></script>
+	<script type="text/javascript"
+		src="webjars/jquery-ui/1.9.2/js/jquery-ui-1.9.2.custom.min.js"></script>
 	<script src="webjars/bootstrap/3.3.7/js/modal.js"></script>
 	<script src="js/jquery.keyboard.min.js"></script>
-		<script src="js/jquery.keyboard.extension-autocomplete.min.js"></script>
 	<script src="js/jquery.keyboard.extension-all.min.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
-    
+
 </body>
 </html>

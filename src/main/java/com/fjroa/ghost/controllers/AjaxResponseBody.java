@@ -1,63 +1,68 @@
 package com.fjroa.ghost.controllers;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.validation.Errors;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * The Class AjaxResponseBody.
  */
 public class AjaxResponseBody {
 
-    /** The msg. */
-    String msg;
-    
-    /** The result. */
-    String result;
-    
-    /** The msg. */
-    String letter;
-    
-    /**
-     * Gets the msg.
-     *
-     * @return the msg
-     */
-    public String getMsg() {
-        return msg;
-    }
+	/** The msg. */
+	private final String msg;
 
-    /**
-     * Sets the msg.
-     *
-     * @param msg the new msg
-     */
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
+	/** The result. */
+	private final String result;
 
-    /**
-     * Gets the result.
-     *
-     * @return the result
-     */
-    public String getResult() {
-        return result;
-    }
+	/** The msg. */
+	private final Character letter;
 
-    /**
-     * Sets the result.
-     *
-     * @param result the new result
-     */
-    public void setResult(String result) {
-        this.result = result;
-    }
+	private Set<String> availablePrefixes;
 
-	public String getLetter() {
+	public AjaxResponseBody(Errors errors) {
+		this.msg = errors.getAllErrors().stream().map(x -> x.getDefaultMessage()).collect(Collectors.joining(","));
+		this.result = null;
+		this.letter = null;
+	}
+
+	@JsonCreator
+	public AjaxResponseBody(@JsonProperty("msg") String msg, @JsonProperty("result") String result,
+			@JsonProperty("letter") Character letter, @JsonProperty("availablePrefixes") Set<String> availablePrefixes) {
+		super();
+		this.msg = msg;
+		this.result = result;
+		this.letter = letter;
+		this.availablePrefixes = availablePrefixes;
+	}
+
+	/**
+	 * Gets the msg.
+	 *
+	 * @return the msg
+	 */
+	public String getMsg() {
+		return msg;
+	}
+
+	/**
+	 * Gets the result.
+	 *
+	 * @return the result
+	 */
+	public String getResult() {
+		return result;
+	}
+
+	public Character getLetter() {
 		return letter;
 	}
-
-	public void setLetter(String letter) {
-		this.letter = letter;
+	
+	public Set<String> getAvailablePrefixes() {
+		return availablePrefixes;
 	}
-
-
-
 }

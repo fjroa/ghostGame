@@ -16,8 +16,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import com.fjroa.ghost.game.IDictionary;
-import com.fjroa.ghost.game.TrieDictionary;
+import com.fjroa.ghost.dict.IDictionary;
+import com.fjroa.ghost.dict.TrieDictionary;
 
 @SpringBootApplication
 public class GhostApplication extends WebMvcConfigurerAdapter {
@@ -27,11 +27,13 @@ public class GhostApplication extends WebMvcConfigurerAdapter {
 	}
 
 
-    
+    /*
+     * Internationalization Beans
+     */
 	@Bean
 	public LocaleResolver localeResolver() {
 		SessionLocaleResolver slr = new SessionLocaleResolver();
-		slr.setDefaultLocale(Locale.ENGLISH);
+		slr.setDefaultLocale(new Locale("es"));
 		return slr;
 	}
 

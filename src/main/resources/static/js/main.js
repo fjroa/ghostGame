@@ -1,18 +1,12 @@
+var availablePrefixes = [];
+
 $(document).ready(
 		function() {
-
-			var availableTags = [ "ActionScript", "AppleScript", "Asp",
-					"BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion",
-					"Erlang", "Fortran", "Groovy", "Haskell", "Java",
-					"JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby",
-					"Scala", "Scheme" ];
-
 			$('input#word').keyboard({
-				openOn : null,
-				stayOpen : true,
 				restrictInput : true,
 				preventPaste : true,
 				layout: 'custom',
+				autoAccept : true,
 				customLayout: {
 					'normal' : [
 						'q w e r t y u i o p',
@@ -24,39 +18,39 @@ $(document).ready(
 					fire_ajax_submit(el.value)
 				}
 			}).autocomplete({
-				source : availableTags
-			}).addAutocomplete({
-				// set position of autocomplete popup
+				source: availablePrefixes
+			})
+			.addAutocomplete({
 				position : {
-					of : null,
-					my : 'right top',
-					at : 'left top',
-					collision : 'flip'
-				},
-				// custom autocomplete widget settings
-				data : '',
-				events : ''
+					of : null,        // when null, element will default to kb.$keyboard
+					my : 'right top', // 'center top', (position under keyboard)
+					at : 'left top',  // 'center bottom',
+					collision: 'flip'
+				}
 			}).addTyping({
 				showTyping : true,
 				lockTypeIn : false,
-				delay : 250
-			}).getkeyboard().reveal();
-
-			$(".btn-game").click(function(event) {
-				fire_ajax_submit($("#word").text() + event.target.id);
+				delay : 750
 			});
-
+			
 			$("#endGame").click(function() {
-				fire_ajax_endgame($("#word").text());
+				fire_ajax_endgame($("input#word").get(0).value);
 			});
-			$(".btn-game").prop("disabled", true);
-			$("#endGame").hide();
-		});
+			$("#newGame").click(function() {
+				$("#newGame").hide();
+				$("#notification").show();
+				$("#notification2").hide();
+				$("#notification3").hide();
+				$("#notification4").hide();
+				$("#notification5").hide();
+				$("#notification6").hide();
+				$("input#word").get(0).disabled = false;
+				$('#result-word').html('');
+				$("input#word").get(0).value = "";
+			});
+});
 
 function fire_ajax_submit(prefix) {
-
-	$(".btn-game").prop("disabled", true);
-
 	$.ajax({
 		type : "POST",
 		contentType : "application/json",
@@ -71,35 +65,46 @@ function fire_ajax_submit(prefix) {
 					+ JSON.stringify(data, null, 4) + "</pre>";
 			$('#feedback').html(json);
 			$('input#word').getkeyboard().typeIn(data.letter, 500)
-
-			if (data.active == true) {
-				$(".btn-game").prop("disabled", false);
+			$('input#word').keyboard().autocomplete({source: data.availablePrefixes});
+			if (data.msg == "PLAY") {
+				$("#notification").hide();
+				$("#notification2").show();
 				$("#endGame").show();
-			} else {
+			} else if (data.msg == "LOSE") {
+				$("#notification2").hide();
+				$("#notification4").show();
+				$("input#word").get(0).disabled = true;
 				$("#endGame").hide();
+				$("#newGame").show();
+			} else if (data.msg == "LOSE2") {
+				$("#notification2").hide();
+				$("#notification3").show();
+				$("input#word").get(0).disabled = true;
+				$("#endGame").hide();
+				$("#newGame").show();
+			} else if (data.msg == "WIN") {
+				$("#notification2").hide();
+				$("#notification6").show();
+				$('#result-word').html(data.result);
+				$("input#word").get(0).disabled = true;
+				$("#endGame").hide();
+				$("#newGame").show();
 			}
 		},
 		error : function(e) {
-
 			var json = "<h4>Ajax Response</h4><pre>" + e.responseText
 					+ "</pre>";
 			$('#feedback').html(json);
-
 			console.log("ERROR : ", e);
-			$(".btn-game").prop("disabled", false);
-
 		}
 	});
 }
 
 function fire_ajax_endgame(prefix) {
-
-	$(".btn-game").prop("disabled", true);
-
 	$.ajax({
 		type : "POST",
 		contentType : "application/json",
-		url : "/api/challenge",
+		url : "/api/giveup",
 		data : JSON.stringify(prefix),
 		dataType : 'json',
 		cache : false,
@@ -108,21 +113,18 @@ function fire_ajax_endgame(prefix) {
 			var json = "<h4>Ajax Response</h4><pre>"
 					+ JSON.stringify(data, null, 4) + "</pre>";
 			$('#feedback').html(json);
-			$('#panel-title').html(data.result);
-
-			$("#startGame").show();
-			$("#startSpanishGame").show();
+			$("#notification2").hide();
+			$("#notification5").show();
+			$('#result-word').html(data.result);
+			$("input#word").get(0).disabled = true;
 			$("#endGame").hide();
-
+			$("#newGame").show();
 		},
 		error : function(e) {
 			var json = "<h4>Ajax Response</h4><pre>" + e.responseText
 					+ "</pre>";
 			$('#feedback').html(json);
-
 			console.log("ERROR : ", e);
-			$(".btn-game").prop("disabled", false);
-
 		}
 	});
 
