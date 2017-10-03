@@ -44,11 +44,20 @@
 						style="margin-left: 1vh" th:text="#{lang.es}"></span>
 					</a>
 				</div>
+				<div class="row pull-right col-md-10" style="padding-top: 10px; padding-left: 20px">
+					<div class="form-group">
+						<label for="showCode" th:text="#{dev.code}" />
+						<input type="checkbox" id="showCode" />
+						<label style="margin-left: 20px" for="showHints" th:text="#{dev.hints}" />
+						<input type="checkbox" checked="checked" id="showHints" />
+					</div>
+				</div>
 				<button type="button" class="btn btn-info btn-lg pull-right"
-					style="margin-top: 8vh" data-toggle="modal" data-target="#myModal">
+					style="margin-top: 2vh" data-toggle="modal" data-target="#myModal">
 					<span class="glyphicon glyphicon-info-sign"><span
 						th:text="#{instructions}" style="margin-left: 1vh"></span></span>
 				</button>
+				
 			</div>
 
 		</div>
@@ -81,7 +90,7 @@
 		</div>
 	</div>
 
-	<code id="feedback"> </code>
+	<code id="feedback" style="display: none"> </code>
 	
 	<div class="container">
 		<footer>
