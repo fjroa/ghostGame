@@ -1,5 +1,3 @@
-var availablePrefixes = [];
-
 $(document).ready(
 		function() {
 			$('input#word').keyboard({
@@ -17,9 +15,7 @@ $(document).ready(
 				change : function(e, keyboard, el) {
 					fire_ajax_submit(el.value)
 				}
-			}).autocomplete({
-				source: availablePrefixes
-			})
+			}).autocomplete()
 			.addAutocomplete({
 				position : {
 					of : null,        // when null, element will default to kb.$keyboard
@@ -36,6 +32,7 @@ $(document).ready(
 			$("#endGame").click(function() {
 				fire_ajax_endgame($("input#word").get(0).value);
 			});
+			
 			$("#newGame").click(function() {
 				$("#newGame").hide();
 				$("#notification").show();
@@ -47,6 +44,14 @@ $(document).ready(
 				$("input#word").get(0).disabled = false;
 				$('#result-word').html('');
 				$("input#word").get(0).value = "";
+			});
+			
+			$("#showCode").change(function() {
+			    if(this.checked) {
+			    	$("#feedback").show();
+			    } else {
+			    	$("#feedback").hide();
+			    }
 			});
 });
 
@@ -65,7 +70,9 @@ function fire_ajax_submit(prefix) {
 					+ JSON.stringify(data, null, 4) + "</pre>";
 			$('#feedback').html(json);
 			$('input#word').getkeyboard().typeIn(data.letter, 500)
-			$('input#word').keyboard().autocomplete({source: data.availablePrefixes});
+			if($("#showHints").is(':checked')) {		    	
+				$('input#word').keyboard().autocomplete({source: data.availablePrefixes});
+			}
 			if (data.msg == "PLAY") {
 				$("#notification").hide();
 				$("#notification2").show();
